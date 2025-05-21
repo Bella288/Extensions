@@ -1,0 +1,142 @@
+{
+  // REQUIRED: The version of the manifest file format your extension uses.
+  // For modern extensions, this must be 3 (Manifest V3).
+  "manifest_version": 3,
+
+  // REQUIRED: The name of your extension. This is displayed to users
+  // in the Chrome Web Store, the browser's extension management page,
+  // and in tooltips when hovering over the extension icon.
+  "name": "My Awesome Extension",
+
+  // REQUIRED: The version number of your extension.
+  // Used by Chrome to determine if an update is available for your extension.
+  // Follows semantic versioning (e.g., "1.0", "1.0.5", "2.1").
+  "version": "1.0",
+
+  // POSSIBLE: A short, plain text description of what your extension does.
+  // This also appears in the Chrome Web Store and the extension management page.
+  "description": "A brief description of what your extension does. It makes Chrome awesome!",
+
+  // POSSIBLE: Defines paths to different-sized image files for your extension's icon.
+  // These icons are used in various places like the Chrome Web Store listing,
+  // the extension management page, and potentially in context menus. If left out,
+  // the icon will be the first letter of your extension's name.
+  "icons": {
+    "16": "icons/icon16.png",    // Small icon for various UI elements
+    "48": "icons/icon48.png",    // Medium icon for extension management page
+    "128": "icons/icon128.png"  // Large icon for Chrome Web Store
+  },
+
+  // POSSIBLE: Defines the behavior of your extension's icon in the browser toolbar.
+  // If this key is omitted, your extension won't have a visible toolbar icon by default.
+  "action": {
+    // POSSIBLE: Specifies an HTML file that opens in a small popup window when
+    // the user clicks your extension's toolbar icon. This is very common for
+    // extensions that provide a quick UI.
+    "default_popup": "popup.html",
+
+    // POSSIBLE: Icons specifically for the toolbar button. These can be different
+    // from the general "icons" defined above. Chrome automatically picks the best size.
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "24": "icons/icon24.png",
+      "32": "icons/icon32.png"
+    },
+
+    // POSSIBLE: The tooltip text that appears when a user hovers their mouse
+    // over your extension's toolbar icon.
+    "default_title": "Click to open My Awesome Extension"
+  },
+
+  // POSSIBLE: An array of strings declaring specific Chrome API access your
+  // extension needs to function. Chrome will prompt the user for these permissions
+  // during installation or update. Request only what you truly need.
+  "permissions": [
+    // "activeTab" grants temporary access to the currently active tab when the
+    // user invokes the extension (e.g., clicks the toolbar icon). It's a safer
+    // alternative to host permissions for simple tab interactions.
+    "activeTab",
+    // "storage" allows your extension to store and retrieve data locally or
+    // sync it across the user's signed-in Chrome instances. Essential for settings.
+    "storage",
+    // "scripting" is required to programmatically inject JavaScript or CSS
+    // into web pages (e.g., from your popup or background script). This replaces
+    // 'executeScript' from Manifest V2.
+    "scripting",
+    // "contextMenus" allows your extension to add items to the browser's
+    // right-click context menu.
+    "contextMenus"
+  ],
+
+  // POSSIBLE: An array of URL match patterns for websites your extension needs
+  // to interact with or inject scripts into. This grants broader access than
+  // 'activeTab' and persists across page loads.
+  // "<all_urls>" grants access to all HTTP and HTTPS URLs. Use with extreme caution
+  // and only if your extension genuinely requires it, as it's a powerful permission.
+  // You can also specify more granular patterns like "https://*.github.com/*".
+  "host_permissions": [
+    "<all_urls>"
+    // "https://*.github.com/*", // Example: Access to all GitHub subdomains over HTTPS
+    // "http://localhost:8080/*" // Example: Access to a local development server
+  ],
+
+  // POSSIBLE: Defines your extension's "service worker" (background script).
+  // This script runs in the background and listens for browser events, handling
+  // logic that doesn't require a direct user interface. It's event-driven and
+  // only active when needed, conserving resources.
+  "background": {
+    // REQUIRED for Manifest V3 background scripts: The path to your service worker JavaScript file.
+    "service_worker": "background.js"
+  },
+
+  // POSSIBLE: An array of objects defining JavaScript and CSS files to be
+  // automatically injected into specific web pages that match the defined patterns.
+  // Content scripts run in the context of the web page and can interact with its DOM.
+  "content_scripts": [
+    {
+      // REQUIRED: An array of URL match patterns where this content script should run.
+      // This example matches all URLs on github.com (both HTTP and HTTPS).
+      "matches": ["*://*.github.com/*"],
+      // REQUIRED: An array of JavaScript files to inject into the matched pages.
+      "js": ["content.js"],
+      // POSSIBLE: An array of CSS files to inject into the matched pages for styling.
+      "css": ["content.css"],
+      // POSSIBLE: When the script should be injected.
+      // "document_idle": After the DOM is ready and resources (like images) have finished loading.
+      // "document_start": Immediately after the document is created, before any HTML.
+      // "document_end": After the DOM is complete, but before sub-resources are loaded.
+      "run_at": "document_idle"
+    }
+  ],
+
+  // POSSIBLE: Specifies an HTML page that opens when the user clicks "Options"
+  // for your extension in the browser's extension management page.
+  "options_page": "options.html",
+
+  // POSSIBLE: Defines keyboard shortcuts (commands) that can trigger actions
+  // in your extension.
+  "commands": {
+    // "_execute_action" is a special command that triggers the primary action
+    // defined in the "action" key (e.g., opening the default popup).
+    "_execute_action": {
+      // REQUIRED: Suggested keyboard shortcuts for the command.
+      "suggested_key": {
+        "default": "Ctrl+Shift+F", // Default shortcut for most OS
+        "mac": "Command+Shift+F"   // Mac-specific shortcut
+      },
+      // POSSIBLE: A short description displayed next to the command in Chrome's
+      // keyboard shortcut settings.
+      "description": "Opens My Awesome Extension popup."
+    }
+    // You can define custom commands too, e.g.:
+    // "toggle-feature": {
+    //   "suggested_key": { "default": "Ctrl+Shift+U" },
+    //   "description": "Toggles a specific feature."
+    // }
+  }
+
+  // POSSIBLE: "default_locale": "en", // Specifies the default language for internationalization.
+  // POSSIBLE: "omnibox": { "keyword": "myext" }, // Allows users to type "myext" in the address bar to use your extension.
+  // POSSIBLE: "declarative_net_request": { ... }, // For blocking or redirecting network requests without content scripts.
+  // POSSIBLE: "web_accessible_resources": [], // If your extension needs to expose resources (images, HTML) to web pages.
+}
