@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Website Blocker Settings</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 600px;
+            padding: 20px;
+        }
+        
+        h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        div {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        input[type="text"],
+        input[type="url"],
+        input[type="time"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        button {
+            padding: 8px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
+        }
+        
+        .schedule-item {
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        
+        .schedule-item button {
+            background-color: #dc3545;
+            margin-top: 10px;
+        }
+        
+        .schedule-item button:hover {
+            background-color: #c82333;
+        }
+        
+        .day-checkboxes label {
+            display: inline-block;
+            margin-right: 10px;
+            font-weight: normal;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Website Blocker Settings</h2>
+
+    <div>
+        <label for="redirectUrl">Redirect URL (when blocked):</label>
+        <input type="url" id="redirectUrl" placeholder="e.g., https://www.google.com" value="https://www.google.com">
+        <button id="saveRedirectUrl">Save Redirect URL</button>
+    </div>
+
+    <h3>Allow if string is present (per domain):</h3>
+    <div>
+        <label for="domainForString">Domain:</label>
+        <input type="text" id="domainForString" placeholder="e.g., example.com">
+        <label for="stringToAllow">String to allow:</label>
+        <input type="text" id="stringToAllow" placeholder="e.g., 'work' (will allow example.com if 'work' is in URL)">
+        <button id="addAllowedString">Add/Update Allowed String</button>
+    </div>
+    <div id="allowedStringsList">
+        <h4>Configured Allowed Strings:</h4>
+        <ul id="allowedStringsUl">
+        </ul>
+    </div>
+
+    <h3>Custom Block Schedules:</h3>
+    <div>
+        <label>Days to block:</label>
+        <div class="day-checkboxes">
+            <input type="checkbox" id="day0" value="0"><label for="day0">Sun</label>
+            <input type="checkbox" id="day1" value="1"><label for="day1">Mon</label>
+            <input type="checkbox" id="day2" value="2"><label for="day2">Tue</label>
+            <input type="checkbox" id="day3" value="3"><label for="day3">Wed</label>
+            <input type="checkbox" id="day4" value="4"><label for="day4">Thu</label>
+            <input type="checkbox" id="day5" value="5"><label for="day5">Fri</label>
+            <input type="checkbox" id="day6" value="6"><label for="day6">Sat</label>
+        </div>
+        <label for="startTime">Start Time:</label>
+        <input type="time" id="startTime">
+        <label for="endTime">End Time:</label>
+        <input type="time" id="endTime">
+        <button id="addSchedule">Add Schedule</button>
+    </div>
+    <div id="schedulesList">
+        <h4>Configured Schedules:</h4>
+        <ul id="schedulesUl">
+        </ul>
+    </div>
+
+    <script src="options.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+{
+    "manifest_version": 3,
+    "name": "Custom Website Blocker",
+    "version": "1.0",
+    "description": "Block custom websites, allow with specific strings, and set schedules.",
+    "permissions": [
+        "storage",
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>",
+        "alarms",
+        "activeTab"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "icon.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "options_page": "options.html"
+}

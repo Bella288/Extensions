@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Website Blocker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 300px;
+            padding: 10px;
+        }
+        
+        h3 {
+            margin-top: 0;
+        }
+        
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        li {
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .remove-btn {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 3px 7px;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        
+        input[type="text"] {
+            width: calc(100% - 70px);
+            padding: 5px;
+            margin-right: 5px;
+        }
+        
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        
+        #options-link {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Website Blocker</h3>
+    <div>
+        <input type="text" id="websiteInput" placeholder="Add website to block (e.g., example.com)">
+        <button id="addWebsite">Add</button>
+    </div>
+    <h4>Blocked Websites:</h4>
+    <ul id="blockedWebsitesList">
+    </ul>
+    <a href="options.html" target="_blank" id="options-link">Settings</a>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
