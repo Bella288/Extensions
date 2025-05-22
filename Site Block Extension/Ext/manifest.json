@@ -1,14 +1,12 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "Custom Website Blocker",
-    "version": "1.1",
+    "version": "1.0",
     "description": "Block custom websites, allow with specific strings, and set schedules.",
     "permissions": [
         "storage",
-        "webRequest",
-        "webRequestBlocking",
-        "<all_urls>",
         "alarms",
+        "declarativeNetRequest",
         "activeTab"
     ],
     "host_permissions": [
@@ -21,5 +19,13 @@
     "background": {
         "service_worker": "background.js"
     },
-    "options_page": "options.html"
+    "options_page": "options.html",
+    "icons": "icon.png",
+    "declarative_net_request": {
+        "rule_resources": [{
+            "id": "ruleset_1",
+            "enabled": true,
+            "path": "rules.json"
+        }]
+    }
 }
