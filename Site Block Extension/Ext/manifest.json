@@ -1,7 +1,7 @@
 {
-    "manifest_version": 3,
+    "manifest_version": 2,
     "name": "Custom Website Blocker",
-    "version": "1.0",
+    "version": "1.1",
     "description": "Block custom websites, allow with specific strings, and set schedules.",
     "permissions": [
         "storage",
