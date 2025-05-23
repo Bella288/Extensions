@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Blocked</title>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f8fafc; /* Equivalent to Tailwind slate-50 */
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: white;
+            padding: 3rem;
+            border-radius: 0.75rem; /* Equivalent to rounded-lg */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-xl */
+        }
+        .icon {
+            font-size: 4rem;
+            color: #ef4444; /* Equivalent to Tailwind red-500 */
+            margin-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2.25rem; /* Equivalent to text-4xl */
+            font-weight: 700; /* Equivalent to font-bold */
+            color: #1f2937; /* Equivalent to gray-800 */
+            margin-bottom: 1rem; /* Equivalent to mb-4 */
+        }
+        p {
+            font-size: 1.125rem; /* Equivalent to text-lg */
+            color: #4b5563; /* Equivalent to gray-600 */
+        }
+        p.small-text {
+            font-size: 1rem; /* Equivalent to text-md */
+            color: #6b7280; /* Equivalent to gray-500 */
+            margin-top: 0.5rem; /* Equivalent to mt-2 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">🚫</div>
+        <h1>Site Blocked</h1>
+        <p>This site has been blocked by your extension.</p>
+        <p class="small-text">You can change your settings in the extension options.</p>
+    </div>
+</body>
+</html>

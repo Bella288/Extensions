@@ -1,31 +1,34 @@
 {
     "manifest_version": 3,
-    "name": "Custom Website Blocker",
-    "version": "1.0",
-    "description": "Block custom websites, allow with specific strings, and set schedules.",
-    "permissions": [
-        "storage",
-        "alarms",
-        "declarativeNetRequest",
-        "activeTab"
-    ],
-    "host_permissions": [
-        "<all_urls>"
-    ],
-    "action": {
-        "default_popup": "popup.html",
-        "default_icon": "icon.png"
+    "name": "Site Block Extension",
+    "version": "1.4",
+    "description": "Block distracting websites, add exceptions, set schedules, and browse the web with ease!",
+    "icons": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
     },
-    "background": {
-        "service_worker": "background.js"
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon.png"
     },
     "options_page": "options.html",
-    "icons": "icon.png",
-    "declarative_net_request": {
-        "rule_resources": [{
-            "id": "ruleset_1",
-            "enabled": true,
-            "path": "rules.json"
-        }]
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": [
+      "storage",
+      "activeTab",
+      "webRequest",
+      "alarms",
+      "tabs",
+      "declarativeNetRequest"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
     }
-}
+  }
+  

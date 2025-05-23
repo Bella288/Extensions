@@ -1,79 +1,57 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const websiteInput = document.getElementById('websiteInput');
-    const addWebsiteButton = document.getElementById('addWebsite');
-    const blockedWebsitesList = document.getElementById('blockedWebsitesList');
+document.addEventListener('DOMContentLoaded', () => {
+    const toggleBlocking = document.getElementById('toggleBlocking');
+    const statusText = document.getElementById('statusText');
+    const optionsButton = document.getElementById('optionsButton');
 
-    // Load blocked websites when the popup opens
-    loadBlockedWebsites();
+    // Function to update the UI based on Lock-In Mode
+    function updateUIAccordingToLockInMode(isLockInModeEnabled) {
+        toggleBlocking.disabled = isLockInModeEnabled;
+        if (isLockInModeEnabled) {
+            // Optionally, provide a visual cue that it's locked
+            toggleBlocking.style.cursor = 'not-allowed';
+        } else {
+            toggleBlocking.style.cursor = 'pointer';
+        }
+    }
 
-    addWebsiteButton.addEventListener('click', addWebsite);
-    blockedWebsitesList.addEventListener('click', function(event) {
-        if (event.target.classList.contains('remove-btn')) {
-            removeWebsite(event.target.dataset.website);
+    // Load current blocking status and Lock-In Mode status
+    chrome.storage.local.get(['isBlockingEnabled', 'isLockInModeEnabled'], (result) => {
+        const isEnabled = result.isBlockingEnabled !== false; // Default to true if not set
+        const lockInEnabled = result.isLockInModeEnabled === true; // Default to false
+
+        toggleBlocking.checked = isEnabled;
+        statusText.textContent = isEnabled ? 'ON' : 'OFF';
+        statusText.classList.toggle('on', isEnabled); // Use 'on' class for green
+        statusText.classList.toggle('off', !isEnabled); // Use 'off' class for red
+
+        updateUIAccordingToLockInMode(lockInEnabled);
+    });
+
+    // Handle toggle switch change
+    toggleBlocking.addEventListener('change', () => {
+        const isEnabled = toggleBlocking.checked;
+        chrome.storage.local.set({ isBlockingEnabled: isEnabled }, () => {
+            statusText.textContent = isEnabled ? 'ON' : 'OFF';
+            statusText.classList.toggle('on', isEnabled);
+            statusText.classList.toggle('off', !isEnabled);
+            // Send message to background script to update blocking
+            chrome.runtime.sendMessage({ action: 'updateBlockingStatus', isEnabled: isEnabled });
+        });
+    });
+
+    // Handle options button click
+    optionsButton.addEventListener('click', () => {
+        if (chrome.runtime.openOptionsPage) {
+            chrome.runtime.openOptionsPage();
+        } else {
+            window.open(chrome.runtime.getURL('options.html'));
         }
     });
 
-    async function addWebsite() {
-        let url = websiteInput.value.trim();
-        if (url) {
-            if (!url.startsWith('http://') && !url.startsWith('https://')) {
-                url = 'https://' + url; // Prepend https for consistency
-            }
-            try {
-                const urlObj = new URL(url);
-                const domain = urlObj.hostname;
-
-                chrome.storage.sync.get('blockedSites', function(data) {
-                    let blockedSites = data.blockedSites || [];
-                    if (!blockedSites.includes(domain)) {
-                        blockedSites.push(domain);
-                        chrome.storage.sync.set({ 'blockedSites': blockedSites }, function() {
-                            websiteInput.value = '';
-                            loadBlockedWebsites();
-                            console.log('Website added:', domain);
-                            // Notify background script to update blocking rules
-                            chrome.runtime.sendMessage({ action: "updateBlockingRules" });
-                        });
-                    } else {
-                        alert('This website is already on the blocklist.');
-                    }
-                });
-            } catch (e) {
-                alert('Please enter a valid URL or domain (e.g., example.com)');
-                console.error('Invalid URL:', url, e);
-            }
+    // Listen for changes to Lock-In Mode from other parts of the extension (e.g., options page)
+    chrome.storage.onChanged.addListener((changes, namespace) => {
+        if (namespace === 'local' && changes.isLockInModeEnabled !== undefined) {
+            updateUIAccordingToLockInMode(changes.isLockInModeEnabled.newValue);
         }
-    }
-
-    function removeWebsite(website) {
-        chrome.storage.sync.get('blockedSites', function(data) {
-            let blockedSites = data.blockedSites || [];
-            const updatedSites = blockedSites.filter(site => site !== website);
-            chrome.storage.sync.set({ 'blockedSites': updatedSites }, function() {
-                loadBlockedWebsites();
-                console.log('Website removed:', website);
-                // Notify background script to update blocking rules
-                chrome.runtime.sendMessage({ action: "updateBlockingRules" });
-            });
-        });
-    }
-
-    function loadBlockedWebsites() {
-        chrome.storage.sync.get('blockedSites', function(data) {
-            const blockedSites = data.blockedSites || [];
-            blockedWebsitesList.innerHTML = '';
-            if (blockedSites.length === 0) {
-                blockedWebsitesList.innerHTML = '<li>No websites blocked yet.</li>';
-                return;
-            }
-            blockedSites.forEach(site => {
-                const li = document.createElement('li');
-                li.innerHTML = `
-                    <span>${site}</span>
-                    <button class="remove-btn" data-website="${site}">Remove</button>
-                `;
-                blockedWebsitesList.appendChild(li);
-            });
-        });
-    }
+    });
 });

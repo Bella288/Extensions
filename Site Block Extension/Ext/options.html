@@ -1,137 +1,306 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <title>Website Blocker Settings</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Blocker Options</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            width: 600px;
-            padding: 20px;
+            font-family: "Inter", sans-serif;
+            background-color: #f8fafc; /* Equivalent to Tailwind slate-50 */
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
-        
-        h2 {
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 10px;
-            margin-bottom: 20px;
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
         }
-        
-        div {
-            margin-bottom: 15px;
+        h1 {
+            font-size: 1.875rem; /* Equivalent to text-3xl */
+            font-weight: 700; /* Equivalent to font-bold */
+            color: #1f2937; /* Equivalent to gray-800 */
+            margin-bottom: 1rem; /* Equivalent to mb-4 */
+            text-align: center;
         }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
+        .section {
+            /* No direct Tailwind equivalent, used for structural grouping */
         }
-        
-        input[type="text"],
-        input[type="url"],
-        input[type="time"] {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
+        .section h2 {
+            font-size: 1.5rem; /* Equivalent to text-2xl */
+            font-weight: 600; /* Equivalent to font-semibold */
+            color: #374151; /* Equivalent to gray-700 */
+            margin-bottom: 0.75rem; /* Equivalent to mb-3 */
         }
-        
-        textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-            resize: vertical;
-            min-height: 80px;
+        .input-group {
+            display: flex;
+            gap: 0.5rem; /* Equivalent to gap-2 */
+            margin-bottom: 1rem; /* Equivalent to mb-4 */
         }
-        
-        button {
-            padding: 8px 15px;
-            background-color: #007bff;
-            color: white;
+        .input-group input[type="text"] {
+            flex-grow: 1; /* Equivalent to flex-grow */
+            padding: 0.5rem; /* Equivalent to p-2 */
+            border: 1px solid #d1d5db; /* Equivalent to border border-gray-300 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            outline: none; /* Equivalent to focus:outline-none */
+        }
+        .input-group input[type="text"]:focus {
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5); /* Equivalent to focus:ring-2 focus:ring-blue-400 */
+        }
+        .add-button {
+            background-color: #3b82f6; /* Equivalent to blue-500 */
+            color: #ffffff; /* Equivalent to text-white */
+            font-weight: 600; /* Equivalent to font-semibold */
+            padding: 0.5rem 1rem; /* Equivalent to py-2 px-4 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); /* Equivalent to shadow-sm */
+            transition: background-color 200ms ease-in-out;
             border: none;
-            border-radius: 4px;
             cursor: pointer;
         }
-        
-        button:hover {
-            background-color: #0056b3;
+        .add-button:hover {
+            background-color: #2563eb; /* Equivalent to hover:bg-blue-600 */
         }
-        
-        .schedule-item {
-            border: 1px solid #eee;
-            padding: 10px;
-            margin-top: 10px;
-            background-color: #f9f9f9;
-            border-radius: 5px;
+        .add-button:disabled {
+            background-color: #9ca3af; /* Tailwind gray-400 */
+            cursor: not-allowed;
         }
-        
-        .schedule-item button {
-            background-color: #dc3545;
-            margin-top: 10px;
+        .list-container {
+            background-color: #f9fafb; /* Equivalent to bg-gray-50 */
+            padding: 0.75rem; /* Equivalent to p-3 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            border: 1px solid #e5e7eb; /* Equivalent to border border-gray-200 */
         }
-        
-        .schedule-item button:hover {
-            background-color: #c82333;
+        .list-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e2e8f0; /* Equivalent to border-b border-gray-200 */
         }
-        
-        .day-checkboxes label {
-            display: inline-block;
-            margin-right: 10px;
-            font-weight: normal;
+        .list-item:last-child {
+            border-bottom: none;
+        }
+        .list-item span {
+            color: #1f2937; /* Equivalent to text-gray-800 */
+        }
+        .remove-button {
+            background-color: #ef4444; /* Equivalent to red-500 */
+            color: #ffffff; /* Equivalent to text-white */
+            font-size: 0.75rem; /* Equivalent to text-xs */
+            font-weight: 700; /* Equivalent to font-bold */
+            padding: 0.25rem 0.5rem; /* Equivalent to py-1 px-2 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            transition: background-color 200ms ease-in-out;
+            border: none;
+            cursor: pointer;
+        }
+        .remove-button:hover {
+            background-color: #dc2626; /* Equivalent to hover:bg-red-600 */
+        }
+        .remove-button:disabled {
+            background-color: #9ca3af; /* Tailwind gray-400 */
+            cursor: not-allowed;
+        }
+        .info-text {
+            color: #4b5563; /* Equivalent to gray-600 */
+            font-size: 0.875rem; /* Equivalent to text-sm */
+            margin-bottom: 0.5rem; /* Equivalent to mb-2 */
+        }
+
+        /* Time-based Blocking Section */
+        .time-blocking-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem; /* Equivalent to gap-4 */
+            margin-bottom: 1rem; /* Equivalent to mb-4 */
+            align-items: center; /* Equivalent to items-center */
+        }
+        @media (min-width: 640px) { /* Equivalent to sm:flex-row */
+            .time-blocking-group {
+                flex-direction: row;
+            }
+        }
+        .time-input-wrapper {
+            flex: 1; /* Equivalent to flex-1 */
+            width: 100%; /* Equivalent to w-full */
+        }
+        .time-input-wrapper label {
+            display: block;
+            color: #374151; /* Equivalent to gray-700 */
+            font-size: 0.875rem; /* Equivalent to text-sm */
+            font-weight: 500; /* Equivalent to font-medium */
+            margin-bottom: 0.25rem; /* Equivalent to mb-1 */
+        }
+        .time-input-wrapper input[type="time"] {
+            width: 100%; /* Equivalent to w-full */
+            padding: 0.5rem; /* Equivalent to p-2 */
+            border: 1px solid #d1d5db; /* Equivalent to border border-gray-300 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            outline: none;
+        }
+        .time-input-wrapper input[type="time"]:focus {
+            box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.5); /* Equivalent to focus:ring-2 focus:ring-blue-400 */
+        }
+        .time-input-wrapper input[type="time"]:disabled {
+            background-color: #e5e7eb; /* Tailwind gray-200 */
+            cursor: not-allowed;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem; /* Equivalent to gap-2 */
+            margin-bottom: 1rem; /* Equivalent to mb-4 */
+        }
+        .checkbox-group input[type="checkbox"] {
+            height: 1.25rem; /* Equivalent to h-5 */
+            width: 1.25rem; /* Equivalent to w-5 */
+            color: #2563eb; /* Equivalent to text-blue-600 */
+            border-radius: 0.25rem; /* Equivalent to rounded */
+        }
+        .checkbox-group input[type="checkbox"]:disabled {
+            cursor: not-allowed;
+        }
+        .checkbox-group label {
+            color: #374151; /* Equivalent to gray-700 */
+            font-weight: 500; /* Equivalent to font-medium */
+        }
+
+        /* Save Button */
+        .save-button {
+            width: 100%; /* Equivalent to w-full */
+            background-color: #16a34a; /* Equivalent to green-600 */
+            color: #ffffff; /* Equivalent to text-white */
+            font-weight: 600; /* Equivalent to font-semibold */
+            padding: 0.75rem 1.5rem; /* Equivalent to py-3 px-6 */
+            border-radius: 0.375rem; /* Equivalent to rounded-md */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05); /* Equivalent to shadow-lg */
+            transition: background-color 200ms ease-in-out;
+            border: none;
+            cursor: pointer;
+        }
+        .save-button:hover {
+            background-color: #15803d; /* Equivalent to hover:bg-green-700 */
+        }
+        .save-button:disabled {
+            background-color: #9ca3af; /* Tailwind gray-400 */
+            cursor: not-allowed;
+        }
+
+        /* Save Message */
+        .save-message {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: #22c55e; /* Equivalent to green-500 */
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+            opacity: 0;
+            transition: opacity 300ms ease-in-out;
+        }
+        /* Lock-In Mode specific styles */
+        .lock-in-mode-toggle-button {
+            background-color: #f97316; /* Tailwind orange-500 */
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.375rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+            transition: background-color 200ms ease-in-out;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        .lock-in-mode-toggle-button:hover {
+            background-color: #ea580c; /* Tailwind orange-600 */
+        }
+        .lock-in-mode-toggle-button.active {
+            background-color: #dc2626; /* Tailwind red-600 */
+        }
+        .lock-in-mode-toggle-button.active:hover {
+            background-color: #b91c1c; /* Tailwind red-700 */
+        }
+        .lock-in-mode-info {
+            text-align: center;
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-top: 0.5rem;
         }
     </style>
 </head>
-
 <body>
-    <h2>Website Blocker Settings</h2>
+    <div class="container">
+        <h1>Site Blocker Options</h1>
 
-    <div>
-        <label for="redirectUrl">Redirect URL (when blocked):</label>
-        <input type="url" id="redirectUrl" placeholder="e.g., https://www.google.com" value="https://www.google.com">
-        <button id="saveRedirectUrl">Save Redirect URL</button>
-    </div>
-
-    <h3>Allow if string is present (per domain):</h3>
-    <div>
-        <label for="domainForString">Domain:</label>
-        <input type="text" id="domainForString" placeholder="e.g., example.com">
-        <label for="stringToAllow">String to allow:</label>
-        <input type="text" id="stringToAllow" placeholder="e.g., 'work' (will allow example.com if 'work' is in URL)">
-        <button id="addAllowedString">Add/Update Allowed String</button>
-    </div>
-    <div id="allowedStringsList">
-        <h4>Configured Allowed Strings:</h4>
-        <ul id="allowedStringsUl">
-        </ul>
-    </div>
-
-    <h3>Custom Block Schedules:</h3>
-    <div>
-        <label>Days to block:</label>
-        <div class="day-checkboxes">
-            <input type="checkbox" id="day0" value="0"><label for="day0">Sun</label>
-            <input type="checkbox" id="day1" value="1"><label for="day1">Mon</label>
-            <input type="checkbox" id="day2" value="2"><label for="day2">Tue</label>
-            <input type="checkbox" id="day3" value="3"><label for="day3">Wed</label>
-            <input type="checkbox" id="day4" value="4"><label for="day4">Thu</label>
-            <input type="checkbox" id="day5" value="5"><label for="day5">Fri</label>
-            <input type="checkbox" id="day6" value="6"><label for="day6">Sat</label>
+        <div class="section">
+            <h2>Lock-In Mode</h2>
+            <p class="info-text">
+                When Lock-In Mode is active, you cannot easily disable blocking or modify blocked sites/exceptions without confirmation.
+            </p>
+            <button id="toggleLockInMode" class="lock-in-mode-toggle-button">
+                Enable Lock-In Mode
+            </button>
+            <p id="lockInModeStatus" class="lock-in-mode-info">Lock-In Mode is OFF</p>
         </div>
-        <label for="startTime">Start Time:</label>
-        <input type="time" id="startTime">
-        <label for="endTime">End Time:</label>
-        <input type="time" id="endTime">
-        <button id="addSchedule">Add Schedule</button>
-    </div>
-    <div id="schedulesList">
-        <h4>Configured Schedules:</h4>
-        <ul id="schedulesUl">
-        </ul>
+
+        <div class="section">
+            <h2>Blocked Websites</h2>
+            <div class="input-group">
+                <input type="text" id="blockedSiteInput" placeholder="e.g., youtube.com, facebook.com">
+                <button id="addBlockedSite" class="add-button">
+                    Add Site
+                </button>
+            </div>
+            <ul id="blockedSitesList" class="list-container">
+                </ul>
+        </div>
+
+        <div class="section">
+            <h2>Exceptions</h2>
+            <p class="info-text">
+                Add URLs or parts of URLs to exclude from blocking.
+                <br>Examples: `youtube.com/mychannel`, `*google.com/maps`, `specific_string_in_url`
+            </p>
+            <div class="input-group">
+                <input type="text" id="exceptionInput" placeholder="e.g., youtube.com/mychannel, *google.com/maps">
+                <button id="addException" class="add-button">
+                    Add Exception
+                </button>
+            </div>
+            <ul id="exceptionsList" class="list-container">
+                </ul>
+        </div>
+
+        <div class="section">
+            <h2>Time-Based Blocking</h2>
+            <div class="time-blocking-group">
+                <div class="time-input-wrapper">
+                    <label for="blockStartTime">Block From:</label>
+                    <input type="time" id="blockStartTime">
+                </div>
+                <div class="time-input-wrapper">
+                    <label for="blockEndTime">Block Until:</label>
+                    <input type="time" id="blockEndTime">
+                </div>
+            </div>
+            <div class="checkbox-group">
+                <input type="checkbox" id="enableTimeBlocking">
+                <label for="enableTimeBlocking">Enable Time-Based Blocking</label>
+            </div>
+        </div>
+
+        <button id="saveSettings" class="save-button">
+            Save Settings
+        </button>
     </div>
 
     <script src="options.js"></script>
 </body>
-
 </html>
